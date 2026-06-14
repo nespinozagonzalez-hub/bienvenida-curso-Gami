@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenida · Certificación Gamificación de 0 a 100</title>
+  <style>
+    :root {
+      --azul:#062b63;
+      --azul-2:#0d3d84;
+      --teal:#0c9aa4;
+      --teal-2:#18b9c4;
+      --naranjo:#f59a16;
+      --naranjo-2:#ffb02e;
+      --oro:#ffc247;
+      --crema:#fbf8ef;
+      --panel:#ffffff;
+      --texto:#1e2a3a;
+      --muted:#607083;
+      --linea:#d9e5e8;
+      --shadow:0 18px 45px rgba(8,47,104,.13);
+      --radius:24px;
+    }
+
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html, body { width:100%; min-height:100%; background:#eef6f7; font-family: "Aptos", "Segoe UI", Arial, sans-serif; color:var(--texto); }
+    body { display:flex; justify-content:center; align-items:center; padding:18px; }
+
+    .gami-shell {
+      width:min(1280px, 100vw - 24px);
+      aspect-ratio:16/9;
+      min-height:560px;
+      position:relative;
+      overflow:hidden;
+      border-radius:30px;
+      background:
+        radial-gradient(circle at 7% 6%, rgba(24,185,196,.17) 0 9%, transparent 10%),
+        radial-gradient(circle at 95% 6%, rgba(24,185,196,.16) 0 10%, transparent 11%),
+        radial-gradient(circle at 2% 98%, rgba(24,185,196,.14) 0 9%, transparent 10%),
+        radial-gradient(circle at 97% 98%, rgba(24,185,196,.12) 0 10%, transparent 11%),
+        radial-gradient(circle at 88% 18%, rgba(245,154,22,.12) 0 15%, transparent 16%),
+        linear-gradient(135deg, #fffdf7 0%, var(--crema) 45%, #eef7ff 100%);
+      box-shadow:0 26px 70px rgba(8,47,104,.18);
+      isolation:isolate;
+    }
+
+    .gami-shell::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(circle, rgba(12,154,164,.35) 2px, transparent 3px),
+        radial-gradient(circle, rgba(245,154,22,.36) 2px, transparent 3px);
+      background-size:90px 90px, 110px 110px;
+      background-position:60px 80px, 820px 120px;
+      opacity:.16;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .float-mark { position:absolute; z-index:0; opacity:.95; pointer-events:none; }
+    .spark { width:10px; height:10px; background:var(--naranjo); transform:rotate(45deg); border-radius:2px; box-shadow:0 0 20px rgba(245,154,22,.35); }
+    .spark.s1 { left:78%; top:12%; animation:twinkle 2.8s infinite ease-in-out; }
+    .spark.s2 { left:44%; top:23%; background:var(--teal); animation:twinkle 3.2s infinite ease-in-out .4s; }
+    .spark.s3 { left:91%; top:58%; animation:twinkle 2.4s infinite ease-in-out .2s; }
+    .dash { border:2px dashed rgba(12,154,164,.55); border-radius:999px; width:160px; height:74px; transform:rotate(23deg); }
+    .dash.d1 { right:4%; top:18%; } .dash.d2 { left:39%; bottom:8%; transform:rotate(-14deg); width:130px; height:56px; opacity:.5; }
+    @keyframes twinkle { 0%,100% { transform:rotate(45deg) scale(.8); opacity:.45; } 50% { transform:rotate(45deg) scale(1.35); opacity:1; } }
+
+    .stage { position:relative; z-index:1; height:100%; display:grid; grid-template-columns:270px 1fr; gap:20px; padding:34px; }
+
+    .sidebar {
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      min-width:0;
+    }
+
+    .brand-card {
+      background:linear-gradient(180deg, rgba(255,255,255,.82), rgba(238,247,255,.88));
+      border:1px solid rgba(8,47,104,.18);
+      border-radius:24px;
+      padding:16px 18px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+    }
+    .logo { display:none; }
+    .brand-name { color:var(--azul); font-weight:950; font-size:14px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+    .brand-name::before { content:""; width:12px; height:12px; border-radius:4px; background:linear-gradient(135deg,var(--naranjo),var(--oro)); box-shadow:0 0 0 5px rgba(245,154,22,.12); }
+    .course-pill { display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:999px; background:linear-gradient(135deg,var(--naranjo),var(--naranjo-2)); color:#fff; font-size:12px; font-weight:900; letter-spacing:.04em; text-transform:uppercase; box-shadow:0 10px 20px rgba(245,154,22,.22); }
+    .course-title { margin-top:14px; font-size:23px; line-height:1.1; color:var(--azul); font-weight:900; letter-spacing:-.03em; }
+    .course-title span { color:var(--teal); }
+    .brand-note { margin-top:10px; color:var(--muted); font-size:13px; line-height:1.45; }
+
+    .tabs {
+      background:rgba(255,255,255,.64);
+      border:1px solid rgba(12,154,164,.14);
+      border-radius:24px;
+      padding:10px;
+      box-shadow:var(--shadow);
+      display:grid;
+      gap:8px;
+    }
+    .tab-btn {
+      border:0;
+      width:100%;
+      display:flex;
+      align-items:center;
+      gap:11px;
+      padding:12px 13px;
+      border-radius:17px;
+      background:transparent;
+      color:var(--azul);
+      font-weight:900;
+      font-size:13px;
+      cursor:pointer;
+      text-align:left;
+      transition:.24s ease;
+    }
+    .tab-btn .num {
+      width:28px; height:28px; flex:0 0 auto;
+      border-radius:50%;
+      display:grid; place-items:center;
+      background:#e8f6f7;
+      color:var(--teal);
+      font-size:12px;
+      font-weight:900;
+    }
+    .tab-btn:hover { background:#f4fbfc; transform:translateX(2px); }
+    .tab-btn.active { background:linear-gradient(135deg, var(--azul), var(--naranjo)); color:#fff; box-shadow:0 10px 24px rgba(8,47,104,.25); }
+    .tab-btn.active .num { background:#fff; color:var(--azul); }
+
+    .side-footer {
+      margin-top:auto;
+      background:linear-gradient(135deg,var(--azul),#0b3d86 58%,var(--naranjo));
+      color:#fff;
+      border-radius:22px;
+      padding:15px 16px;
+      box-shadow:0 18px 36px rgba(8,47,104,.24);
+    }
+    .side-footer b { display:block; color:var(--oro); margin-bottom:5px; }
+    .side-footer p { font-size:12px; line-height:1.45; color:#dfeaf9; }
+
+    .content {
+      min-width:0;
+      height:100%;
+      border-radius:30px;
+      position:relative;
+      overflow:hidden;
+      background:rgba(255,255,255,.66);
+      border:1px solid rgba(12,154,164,.14);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+    }
+
+    .panel {
+      position:absolute;
+      inset:0;
+      padding:34px;
+      opacity:0;
+      transform:translateY(14px) scale(.985);
+      pointer-events:none;
+      transition:.34s ease;
+      overflow:auto;
+      scrollbar-width:thin;
+    }
+    .panel.active { opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+
+    .panel-head { display:flex; justify-content:space-between; align-items:flex-start; gap:22px; margin-bottom:20px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#edf4ff,#fff3df); color:var(--azul); font-size:12px; font-weight:900; letter-spacing:.09em; text-transform:uppercase; padding:8px 13px; border-radius:999px; }
+    h1, h2 { color:var(--azul); letter-spacing:-.04em; }
+    h1 { font-size:46px; line-height:1.03; margin-top:12px; max-width:680px; }
+    h2 { font-size:34px; line-height:1.05; margin-top:10px; }
+    .lead { color:var(--muted); font-size:17px; line-height:1.58; max-width:750px; margin-top:12px; }
+    .highlight { color:var(--teal); font-weight:900; }
+
+    .hero-grid { display:grid; grid-template-columns:1fr 320px; gap:24px; align-items:stretch; }
+    .hero-visual {
+      border-radius:28px;
+      background:linear-gradient(145deg,#062b63 0%,#0b3d86 48%,#f59a16 120%);
+      color:#fff;
+      position:relative;
+      overflow:hidden;
+      min-height:310px;
+      box-shadow:0 22px 45px rgba(8,47,104,.22);
+      padding:24px;
+    }
+    .hero-visual::before { content:""; position:absolute; inset:-80px -40px auto auto; width:220px; height:220px; border-radius:50%; background:rgba(255,255,255,.12); }
+    .hero-visual::after { content:""; position:absolute; left:-60px; bottom:-70px; width:240px; height:240px; border-radius:50%; background:rgba(244,178,74,.25); }
+    .game-card { position:relative; z-index:1; height:100%; display:flex; flex-direction:column; justify-content:space-between; }
+    .screen { background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.18); border-radius:22px; padding:16px; }
+    .screen-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:15px; }
+    .avatar { width:42px; height:42px; border-radius:50%; background:#fff; display:grid; place-items:center; color:var(--teal); font-weight:900; }
+    .xpbar { flex:1; height:10px; border-radius:999px; background:rgba(255,255,255,.22); overflow:hidden; }
+    .xpbar span { display:block; height:100%; width:72%; background:linear-gradient(90deg,var(--oro),#fff); border-radius:999px; }
+    .map { height:150px; border-radius:20px; background:linear-gradient(180deg,#d7f6f2,#f9f2c9); position:relative; overflow:hidden; }
+    .node { position:absolute; width:28px; height:28px; border-radius:50%; background:var(--teal); border:4px solid #fff; box-shadow:0 6px 12px rgba(0,0,0,.18); }
+    .node.n1 { left:35px; top:85px; } .node.n2 { left:115px; top:55px; background:var(--naranjo); } .node.n3 { left:190px; top:93px; } .node.n4 { right:40px; top:44px; background:var(--oro); }
+    .route-line { position:absolute; left:55px; top:99px; width:230px; height:4px; background:rgba(8,47,104,.22); transform:rotate(-12deg); border-radius:999px; }
+    .cards-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+    .mini-card { background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.18); border-radius:16px; padding:12px 8px; text-align:center; font-size:12px; font-weight:900; }
+
+    .cards { display:grid; gap:14px; }
+    .cards.cols-2 { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .cards.cols-3 { grid-template-columns:repeat(3, minmax(0,1fr)); }
+    .info-card {
+      background:var(--panel);
+      border:1px solid var(--linea);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:0 12px 24px rgba(8,47,104,.08);
+      min-height:120px;
+    }
+    .info-card .icon { width:42px; height:42px; border-radius:50%; display:grid; place-items:center; background:#e8f6f7; color:var(--teal); font-weight:900; margin-bottom:12px; }
+    .info-card.orange .icon { background:#fff3df; color:var(--naranjo); }
+    .info-card.blue .icon { background:#edf3ff; color:var(--azul); }
+    .info-card h3 { color:var(--azul); font-size:17px; margin-bottom:8px; }
+    .info-card p, .info-card li { color:var(--muted); font-size:14px; line-height:1.48; }
+    .info-card ul { padding-left:18px; }
+
+    .timeline { position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:24px 0 18px; }
+    .timeline::before { content:""; position:absolute; left:6%; right:6%; top:31px; height:5px; background:linear-gradient(90deg,var(--teal),var(--naranjo),var(--teal),var(--oro)); border-radius:999px; z-index:0; }
+    .module-card { position:relative; z-index:1; background:#fff; border:1px solid var(--linea); border-radius:20px; padding:16px; box-shadow:0 12px 25px rgba(8,47,104,.08); }
+    .module-num { width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:var(--teal); color:#fff; font-weight:900; margin-bottom:18px; box-shadow:0 8px 18px rgba(12,154,164,.2); }
+    .module-card:nth-child(2) .module-num, .module-card:nth-child(4) .module-num { background:var(--naranjo); }
+    .module-card h3 { color:var(--azul); font-size:16px; line-height:1.2; margin-bottom:8px; }
+    .module-card p { color:var(--muted); font-size:13px; line-height:1.43; }
+
+    .steps { display:grid; gap:13px; margin-top:18px; }
+    .step { display:grid; grid-template-columns:48px 1fr; gap:14px; align-items:start; background:#fff; border:1px solid var(--linea); border-radius:18px; padding:15px; }
+    .step-number { width:48px; height:48px; border-radius:50%; display:grid; place-items:center; background:var(--naranjo); color:#fff; font-weight:900; }
+    .step h3 { color:var(--azul); font-size:17px; margin-bottom:5px; }
+    .step p { color:var(--muted); font-size:14px; line-height:1.48; }
+
+    .resource-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:13px; margin-top:20px; }
+    .resource { background:#fff; border:1px solid var(--linea); border-radius:18px; padding:15px; display:grid; grid-template-columns:42px 1fr; gap:12px; align-items:start; }
+    .resource .r-icon { width:42px; height:42px; border-radius:50%; display:grid; place-items:center; background:#e8f6f7; color:var(--teal); font-weight:900; }
+    .resource:nth-child(even) .r-icon { background:#fff3df; color:var(--naranjo); }
+    .resource h3 { color:var(--azul); font-size:15px; margin-bottom:5px; }
+    .resource p { color:var(--muted); font-size:13px; line-height:1.38; }
+
+    .cta-box {
+      margin-top:20px;
+      border-radius:26px;
+      padding:24px;
+      background:linear-gradient(135deg,var(--azul),#08265a 66%,var(--naranjo));
+      color:#fff;
+      box-shadow:0 18px 38px rgba(8,47,104,.22);
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:18px;
+      align-items:center;
+    }
+    .cta-box h3 { color:#fff; font-size:24px; margin-bottom:6px; }
+    .cta-box p { color:#dce9fb; line-height:1.5; font-size:14px; }
+    .main-btn { border:0; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:16px; padding:14px 18px; background:linear-gradient(135deg,var(--oro),var(--naranjo)); color:#10254e; font-weight:900; box-shadow:0 14px 30px rgba(245,154,22,.27); white-space:nowrap; }
+    .program-link { margin-top:13px; width:100%; padding:12px 13px; border-radius:15px; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; background:linear-gradient(135deg,var(--azul),var(--azul-2)); color:#fff; font-weight:900; font-size:13px; box-shadow:0 12px 24px rgba(8,47,104,.18); }
+    .program-link:hover { filter:brightness(1.08); transform:translateY(-1px); }
+
+    .footer-note { margin-top:16px; color:var(--muted); font-size:12px; line-height:1.45; }
+
+    @media (max-width: 900px) {
+      body { padding:8px; align-items:flex-start; }
+      .gami-shell { width:100%; aspect-ratio:auto; min-height:100vh; border-radius:18px; }
+      .stage { grid-template-columns:1fr; padding:18px; }
+      .sidebar { position:relative; }
+      .tabs { grid-template-columns:repeat(2,1fr); }
+      .side-footer { display:none; }
+      .content { min-height:760px; }
+      .panel { padding:22px; }
+      .hero-grid, .cards.cols-2, .cards.cols-3, .timeline, .resource-grid, .cta-box { grid-template-columns:1fr; }
+      h1 { font-size:34px; }
+      h2 { font-size:28px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="gami-shell" aria-label="Bienvenida Certificación Gamificación de 0 a 100">
+    <div class="float-mark spark s1"></div>
+    <div class="float-mark spark s2"></div>
+    <div class="float-mark spark s3"></div>
+    <div class="float-mark dash d1"></div>
+    <div class="float-mark dash d2"></div>
+
+    <section class="stage">
+      <aside class="sidebar">
+        <div class="brand-card">
+          <div class="brand-name">Gamificación de 0 a 100</div>
+          <div class="course-pill">Certificación</div>
+          <div class="course-title">Gamificación<br><span>de 0 a 100</span></div>
+          <p class="brand-note">Bienvenida interactiva para comprender el recorrido, la filosofía y cómo comenzar la aventura.</p>
+          <a class="program-link" href="https://campus.gamiaula.com/pluginfile.php/142/mod_resource/content/0/Programa%20Curso%20Gamificaci%C3%B3n%20de%200%20a%20100.pdf" target="_blank" rel="noopener">Ver programa PDF</a>
+        </div>
+
+        <nav class="tabs" aria-label="Secciones de bienvenida">
+          <button class="tab-btn active" data-tab="bienvenida"><span class="num">1</span>Inicio</button>
+          <button class="tab-btn" data-tab="filosofia"><span class="num">2</span>Filosofía</button>
+          <button class="tab-btn" data-tab="programa"><span class="num">3</span>Programa</button>
+          <button class="tab-btn" data-tab="funciona"><span class="num">4</span>Cómo avanzar</button>
+          <button class="tab-btn" data-tab="recursos"><span class="num">5</span>Recursos</button>
+          <button class="tab-btn" data-tab="aventura"><span class="num">6</span>Comenzar</button>
+        </nav>
+
+        <div class="side-footer">
+          <b>Aprender es jugar</b>
+          <p>En GamiAula diseñamos experiencias donde el juego organiza, moviliza y da sentido al aprendizaje.</p>
+        </div>
+      </aside>
+
+      <section class="content">
+        <article class="panel active" id="bienvenida">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Bienvenida al recorrido</div>
+              <h1>Bienvenida/o a tu aventura de gamificación</h1>
+              <p class="lead">Esta certificación está diseñada para que no solo estudies gamificación: la vivas desde dentro. A lo largo del curso explorarás ejemplos, resolverás misiones, desbloquearás recursos y construirás una experiencia aplicable a tu propio contexto.</p>
+              <div class="cards cols-3" style="margin-top:22px;">
+                <div class="info-card"><div class="icon">★</div><h3>Aprender haciendo</h3><p>Cada módulo combina recursos, ejemplos, desafíos y aplicación práctica.</p></div>
+                <div class="info-card orange"><div class="icon">▶</div><h3>Vivir el juego</h3><p>El curso se presenta como una experiencia narrativa con misiones y progreso.</p></div>
+                <div class="info-card blue"><div class="icon">✓</div><h3>Aplicar al aula</h3><p>El objetivo final es que salgas con una propuesta lista para adaptar y usar.</p></div>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <div class="game-card">
+                <div class="screen">
+                  <div class="screen-top"><div class="avatar">G</div><div class="xpbar"><span></span></div><strong>NIVEL 1</strong></div>
+                  <div class="map"><div class="route-line"></div><div class="node n1"></div><div class="node n2"></div><div class="node n3"></div><div class="node n4"></div></div>
+                  <div class="cards-row"><div class="mini-card">MISIÓN</div><div class="mini-card">RETO</div><div class="mini-card">LOGRO</div></div>
+                </div>
+                <div>
+                  <h3 style="font-size:22px; margin-bottom:7px;">Tu panel de viaje</h3>
+                  <p style="color:#e7fbff; line-height:1.45; font-size:14px;">Cada avance te acercará a diseñar experiencias más significativas, lúdicas y memorables.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel" id="filosofia">
+          <div class="panel-head"><div><div class="eyebrow">Nuestra mirada</div><h2>La filosofía GamiAula</h2><p class="lead">Para nosotros, gamificar no es decorar una clase con puntos ni convertir todo en competencia. Gamificar es diseñar experiencias con intención pedagógica, estructura, emoción, participación y sentido.</p></div></div>
+          <div class="cards cols-2">
+            <div class="info-card"><div class="icon">1</div><h3>El juego como estructura</h3><p>Usamos misiones, rutas, desafíos y progreso para ordenar la experiencia y hacer visible el avance.</p></div>
+            <div class="info-card orange"><div class="icon">2</div><h3>La emoción como motor</h3><p>Buscamos que aprender tenga curiosidad, sorpresa, logro, decisión y conexión con quienes participan.</p></div>
+            <div class="info-card blue"><div class="icon">3</div><h3>La pedagogía como centro</h3><p>Todo recurso lúdico debe responder a un objetivo de aprendizaje y producir evidencias reales.</p></div>
+            <div class="info-card"><div class="icon">4</div><h3>La aplicación como meta</h3><p>El curso apunta a que diseñes algo viable: una clase, unidad, capacitación o experiencia completa.</p></div>
+          </div>
+          <div class="cta-box"><div><h3>No buscamos solo entretener.</h3><p>Buscamos que el juego ayude a aprender mejor: con claridad, reto, feedback, progresión y sentido.</p></div><button class="main-btn" data-goto="programa">Ver programa</button></div>
+        </article>
+
+        <article class="panel" id="programa">
+          <div class="eyebrow">Ruta completa</div>
+          <h2>Programa de la certificación</h2>
+          <p class="lead">El curso se organiza como una aventura formativa: primero comprendes, luego exploras herramientas, después diseñas y finalmente integras todo en un desafío final.</p>
+          <a class="main-btn" href="https://campus.gamiaula.com/pluginfile.php/142/mod_resource/content/0/Programa%20Curso%20Gamificaci%C3%B3n%20de%200%20a%20100.pdf" target="_blank" rel="noopener" style="margin-top:14px; display:inline-flex;">Descargar programa oficial</a>
+          <div class="timeline">
+            <div class="module-card"><div class="module-num">1</div><h3>Valle del Primer Despertar</h3><p>Fundamentos de gamificación, diferencias con ABJ, motivación, mecánicas, dinámicas y sentido pedagógico.</p></div>
+            <div class="module-card"><div class="module-num">2</div><h3>Forja de Herramientas</h3><p>Herramientas digitales, IA, recursos, experiencias HTML, formatos de gamificación y criterios de selección.</p></div>
+            <div class="module-card"><div class="module-num">3</div><h3>Arquitectura del Juego</h3><p>Diseño del flow, perfiles de jugador, progresión, equilibrio, narrativa, motivación y estructura de experiencia.</p></div>
+            <div class="module-card"><div class="module-num">4</div><h3>Desafío Final RPG</h3><p>Integración de lo aprendido mediante una experiencia final con propuesta aplicable, evidencia y defensa del diseño.</p></div>
+          </div>
+          <div class="cards cols-2">
+            <div class="info-card"><h3>Resultado esperado</h3><p>Al finalizar, tendrás una propuesta gamificada clara, viable, con narrativa, misiones, sistema de avance, recursos y evaluación.</p></div>
+            <div class="info-card orange"><h3>Certificación</h3><p>La aprobación considera el recorrido, la participación en actividades y la entrega de la propuesta final.</p></div>
+          </div>
+        </article>
+
+        <article class="panel" id="funciona">
+          <div class="eyebrow">Cómo debes avanzar</div>
+          <h2>¿Qué hace el estudiante al entrar?</h2>
+          <p class="lead">La certificación está pensada para que avances con autonomía, pero con una ruta clara. Cada módulo tiene recursos, una misión principal, desafíos complementarios y una aplicación práctica.</p>
+          <div class="steps">
+            <div class="step"><div class="step-number">1</div><div><h3>Explora el módulo</h3><p>Revisa la bienvenida, los recursos principales y la narrativa del territorio. No avances solo por completar: observa cómo está diseñada la experiencia.</p></div></div>
+            <div class="step"><div class="step-number">2</div><div><h3>Vive las actividades</h3><p>Participa en desafíos, guías, ejemplos, recursos HTML, juegos o misiones. La idea es que aprendas gamificación experimentándola.</p></div></div>
+            <div class="step"><div class="step-number">3</div><div><h3>Registra avances y códigos</h3><p>Algunas misiones entregan códigos o evidencias de avance. Úsalos cuando corresponda para desbloquear progreso, recursos o cierres narrativos.</p></div></div>
+            <div class="step"><div class="step-number">4</div><div><h3>Diseña tu propia experiencia</h3><p>Desde el inicio irás recogiendo ideas para construir tu propuesta final. Cada módulo aporta una pieza: fundamentos, herramientas, arquitectura y aplicación.</p></div></div>
+            <div class="step"><div class="step-number">5</div><div><h3>Entrega el desafío final</h3><p>Al final deberás presentar una experiencia gamificada con propósito, narrativa, mecánicas, recursos, progresión, evaluación y posibilidad real de implementación.</p></div></div>
+          </div>
+        </article>
+
+        <article class="panel" id="recursos">
+          <div class="eyebrow">Materiales incluidos</div>
+          <h2>Recursos que recibirás</h2>
+          <p class="lead">El curso está acompañado por recursos diseñados para aprender, adaptar y crear experiencias propias, tanto digitales como analógicas.</p>
+          <div class="resource-grid">
+            <div class="resource"><div class="r-icon">1</div><div><h3>Guías de estudio</h3><p>Bases teóricas, ejemplos y orientaciones prácticas por tema.</p></div></div>
+            <div class="resource"><div class="r-icon">2</div><div><h3>Experiencias HTML</h3><p>Módulos narrativos interactivos, desafíos y modelos de juego educativo.</p></div></div>
+            <div class="resource"><div class="r-icon">3</div><div><h3>Plantillas editables</h3><p>Fichas para misiones, narrativa, progreso, evaluación y diseño RPG.</p></div></div>
+            <div class="resource"><div class="r-icon">4</div><div><h3>Gamificaciones digitales</h3><p>Ejemplos de escape rooms, mapas, badges, simuladores y economía de aula.</p></div></div>
+            <div class="resource"><div class="r-icon">5</div><div><h3>Tutorial RPG educativo</h3><p>Paso a paso para crear personajes, guardianes, batallas, códigos, sprites y cierre.</p></div></div>
+            <div class="resource"><div class="r-icon">6</div><div><h3>Kit papel y lápiz</h3><p>Juegos imprimibles para gamificar sin depender de pantallas.</p></div></div>
+            <div class="resource"><div class="r-icon">7</div><div><h3>Navaja Suiza GamiAula</h3><p>Herramientas rápidas para ruletas, dados, candados, cartas y activadores.</p></div></div>
+            <div class="resource"><div class="r-icon">8</div><div><h3>Banco de ideas</h3><p>Referencias para adaptar a distintas asignaturas, niveles y formatos.</p></div></div>
+          </div>
+        </article>
+
+        <article class="panel" id="aventura">
+          <div class="eyebrow">Inicio de aventura</div>
+          <h2>Ya puedes comenzar</h2>
+          <p class="lead">Entra al curso con mentalidad de exploración. No busques solo “cumplir módulos”: observa, juega, analiza y adapta. Cada experiencia que vivas puede transformarse después en una idea para tu aula, taller o capacitación.</p>
+          <div class="cards cols-3" style="margin-top:22px;">
+            <div class="info-card"><div class="icon">✓</div><h3>Antes de partir</h3><p>Ten un contexto real en mente: una clase, unidad, curso, taller o actividad que te gustaría transformar.</p></div>
+            <div class="info-card orange"><div class="icon">★</div><h3>Durante el curso</h3><p>Guarda ideas, pantallazos, mecánicas y ejemplos que puedas adaptar a tu realidad.</p></div>
+            <div class="info-card blue"><div class="icon">▶</div><h3>Al finalizar</h3><p>Entrega una propuesta gamificada con sentido pedagógico, estructura y evidencia de aprendizaje.</p></div>
+          </div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const buttons = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.panel');
+
+    function openTab(id) {
+      buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === id));
+      panels.forEach(panel => panel.classList.toggle('active', panel.id === id));
+      try { localStorage.setItem('gami_intro_tab', id); } catch(e) {}
+    }
+
+    buttons.forEach(btn => btn.addEventListener('click', () => openTab(btn.dataset.tab)));
+    document.querySelectorAll('[data-goto]').forEach(el => el.addEventListener('click', () => openTab(el.dataset.goto)));
+
+    try {
+      const saved = localStorage.getItem('gami_intro_tab');
+      if(saved && document.getElementById(saved)) openTab(saved);
+    } catch(e) {}
+  </script>
+</body>
+</html>
